@@ -1,6 +1,6 @@
 from math import tanh
 
-from sia_tp2.CharacterClass import CharacterClass
+from CharacterClass import CharacterClass
 
 
 def _calculate_performance(character_class, attack, defense):
