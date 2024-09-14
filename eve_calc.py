@@ -13,14 +13,14 @@ def _calculate_performance(character_class, attack, defense):
     elif character_class == CharacterClass.MAGE:
         performance = 0.8 * attack + 0.3 * defense
     else:
-        raise ValueError("Invalid character class")
+        raise ValueError('Invalid character class')
 
     return performance
 
 
 def _calculate_modifiers(height):
     if height < 1.3 or height > 2.0:
-        raise ValueError("Height must be between 1.3m and 2.0m")
+        raise ValueError('Height must be between 1.3m and 2.0m')
 
     h = height
     atm = 0.5 - (3 * h - 5) ** 4 + (3 * h - 5) ** 2 + h / 2
@@ -40,11 +40,11 @@ def _calculate_total_attributes(strength_points, dexterity_points, intelligence_
     return total_strength, total_dexterity, total_intelligence, total_vigor, total_constitution
 
 
-def calculate(character_class, strength_points, dexterity_points, intelligence_points, vigor_points,
-              constitution_points,
-              height):
+def eve_calculate(character_class, strength_points, dexterity_points, intelligence_points, vigor_points,
+                  constitution_points,
+                  height):
     if not isinstance(character_class, CharacterClass):
-        raise ValueError("character_class must be an instance of CharacterClass Enum")
+        raise ValueError('character_class must be an instance of CharacterClass Enum')
 
     total_strength, total_dexterity, total_intelligence, total_vigor, total_constitution = _calculate_total_attributes(
         strength_points, dexterity_points, intelligence_points, vigor_points, constitution_points

@@ -5,11 +5,11 @@ import json
 def parse_arguments():
     # Create the parser
     parser = argparse.ArgumentParser(
-        description="Project for RPG-like character generation from genetic algorithm based on Python.")
+        description='Project for RPG-like character generation from genetic algorithm based on Python.')
 
     # Add arguments
     parser.add_argument('--character-class', type=str, default='warrior',
-                        help='The RPG=like class from which the character will be made')
+                        help='The RPG-like class from which the character will be made')
     parser.add_argument('--points-available', type=int, default=100,
                         help="The amount of points to distribute among the character's skills")
     parser.add_argument('--timeout', type=int, default=1800,

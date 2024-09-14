@@ -1,0 +1,26 @@
+{
+  "population_size": 30,
+  "termination_criteria": {
+    "max_generations": 200,
+    "acceptable_fitness": 18
+  },
+  "parents_selection": {
+    "ratio_of_parenthood": 2.0,
+    "proportion_for_method_a": 0.8,
+    "method1": "elite",
+    "method2": "roulette"
+  },
+  "crossover": {
+    "type": "uniform"
+  },
+  "mutation": {
+    "type": "gen",
+    "probability": 0.4
+  },
+  "new_generation_selection": {
+    "implementation": "traditional",
+    "proportion_for_method_a": 0.8,
+    "method1": "elite",
+    "method2": "roulette"
+  }
+}
