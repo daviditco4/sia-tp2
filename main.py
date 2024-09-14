@@ -1,5 +1,9 @@
 import argparse
 import json
+import multiprocessing
+
+from CharacterClass import CharacterClass
+from genetic_algorithm import genetic_algorithm
 
 
 def parse_arguments():
@@ -14,12 +18,29 @@ def parse_arguments():
                         help="The amount of points to distribute among the character's skills")
     parser.add_argument('--timeout', type=int, default=1800,
                         help='The time limit in seconds to reach the optimal character')
-    parser.add_argument('--config-file', type=str, help='The config file to determine algorithm hyperparameters')
+    parser.add_argument('--config-file', type=str, default='configs/config.json',
+                        help='The config file to determine algorithm hyperparameters')
     parser.add_argument('--output-file', type=str, help='The file to write the output to')
     parser.add_argument('--verbose', action='store_true', help='Increase output verbosity')
 
     # Parse arguments
     return parser.parse_args()
+
+
+def run_with_timeout(char_class, points_available, timeout, conf):
+    ret = multiprocessing.Queue()
+
+    p = multiprocessing.Process(target=genetic_algorithm, args=(char_class, points_available, conf, ret))
+    p.start()
+    p.join(timeout)
+
+    if p.is_alive():
+        result = ret.get()
+        p.terminate()
+        p.join()
+        return result
+    else:
+        return ret.get()
 
 
 def load_config(filename):
@@ -29,6 +50,20 @@ def load_config(filename):
 
 if __name__ == '__main__':
     args = parse_arguments()
+
     if args.verbose:
         print('Loading config...')
     config = load_config(args.config_file)
+    match args.character_class:
+        case 'warrior':
+            character_class = CharacterClass.WARRIOR
+        case 'archer':
+            character_class = CharacterClass.ARCHER
+        case 'guardian':
+            character_class = CharacterClass.GUARDIAN
+        case 'mage':
+            character_class = CharacterClass.MAGE
+        case _:
+            raise ValueError('Invalid character class')
+
+    print(run_with_timeout(character_class, args.points_available, args.timeout, config).to_list())

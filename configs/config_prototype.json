@@ -1,12 +1,10 @@
 {
   "population_size": 30,
   "termination_criteria": {
-    "max_generations": 200,
-    "acceptable_fitness": 18
+    "max_generations": 100000
   },
   "parents_selection": {
-    "ratio_of_parenthood": 2.0,
-    "proportion_for_method_a": 0.8,
+    "proportion_for_method1": 0.5,
     "method1": "elite",
     "method2": "roulette"
   },
@@ -15,11 +13,10 @@
   },
   "mutation": {
     "type": "gen",
-    "probability": 0.4
+    "probability": 0.5
   },
   "new_generation_selection": {
-    "implementation": "traditional",
-    "proportion_for_method_a": 0.8,
+    "proportion_for_method1": 0.5,
     "method1": "elite",
     "method2": "roulette"
   }

@@ -3,28 +3,64 @@ import random
 from Character import Character
 
 
-def mutate_gen(offspring, mutation_rate, unassigned_points_available, total_points_available):
+def gen_mutation(offspring, mutation_rate, total_points_available):
     mutants = []
 
     for individual in offspring:
         if random.random() < mutation_rate:
             index = random.randint(1, Character.attribute_amount + 2 - 1)
-            delta = 0
-
-            while delta == 0 or delta > unassigned_points_available:
-                rand = random.random()
-                delta = random.choice([-1, 1]) * int(((total_points_available / Character.attribute_amount) / 2) * (rand ** 2))
-
             individual_list = individual.to_list()
-            individual_list[index] = max(0, individual_list[index] + delta)
+            delta = None
+
+            if index != Character.attribute_amount + 2 - 1:
+                while not delta or delta > Character.unassigned_points_from_list(individual_list,
+                                                                                 total_points_available):
+                    rand = random.random()
+                    delta = random.choice([-1, 1]) * int(
+                        ((total_points_available / Character.attribute_amount) / 2) * (rand ** 2))
+                individual_list[index] = max(0, individual_list[index] + delta)
+            else:
+                while not delta or individual_list[index] + delta < 1.3 or individual_list[index] + delta > 2.0:
+                    rand = random.random()
+                    delta = random.choice([-1, 1]) * ((2.0 - 1.3) / 2) * (rand ** 2)
+                individual_list[index] = min(2.0, max(1.3, individual_list[index] + delta))
             mutants.append(Character.from_list(individual_list))
-        mutants.append(individual)
+        else:
+            mutants.append(individual)
+
+            return mutants
+
+
+def multigen_mutation(offspring, mutation_rate, total_points_available):
+    mutants = []
+
+    for individual in offspring:
+        individual_list = individual.to_list()
+        deltas = []
+        attr_delta = None
+
+        while attr_delta is None or attr_delta > Character.unassigned_points_from_list(individual_list,
+                                                                                       total_points_available):
+            deltas.clear()
+            attr_delta = 0
+            for i in range(1, Character.attribute_amount + 2 - 1):
+                if random.random() < mutation_rate:
+                    rand = random.random()
+                    deltas.append(random.choice([-1, 1]) * int(
+                        ((total_points_available / Character.attribute_amount) / 2) * (rand ** 2)))
+                    attr_delta += deltas[i - 1]
+                else:
+                    deltas.append(0)
+            if random.random() < mutation_rate:
+                rand = random.random()
+                deltas.append(random.choice([-1, 1]) * ((2.0 - 1.3) / 2) * (rand ** 2))
+            else:
+                deltas.append(0)
+        for i in range(1, Character.attribute_amount + 2 - 1):
+            individual_list[i] = max(0, individual_list[i] + deltas[i - 1])
+        individual_list[Character.attribute_amount + 1] = min(2.0, max(1.3, individual_list[
+            Character.attribute_amount + 2 - 2]))
+
+        mutants.append(Character.from_list(individual_list))
 
     return mutants
-
-
-def mutate_multigen(individual, mutation_rate):
-    for i in range(len(individual)):
-        if random.random() < mutation_rate:
-            individual[i] = random.choice(range(len(individual)))
-    return individual
