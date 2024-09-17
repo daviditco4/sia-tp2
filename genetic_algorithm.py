@@ -42,7 +42,7 @@ def _replace_population(population, offspring, evaluation_fun, config):
             case 'universal':
                 new_generation.extend(universal_selection(population + offspring, evaluation_fun, num_individuals))
             case 'boltzmann':
-                new_generation.extend(boltzmann_selection(population + offspring, evaluation_fun, num_individuals, 0.8))
+                new_generation.extend(boltzmann_selection(population + offspring, evaluation_fun, num_individuals, 0.1))
             case 'deterministic_tournament':
                 new_generation.extend(
                     deterministic_tournament_selection(population + offspring, evaluation_fun, num_individuals))
@@ -98,6 +98,8 @@ def _select_parents(population, evaluation_fun, config):
                 parents.extend(roulette_selection(population, evaluation_fun, n_parents))
             case 'universal':
                 parents.extend(universal_selection(population, evaluation_fun, n_parents))
+            case 'boltzmann':
+                parents.extend(boltzmann_selection(population, evaluation_fun, n_parents, 0.1))
             case 'deterministic_tournament':
                 parents.extend(deterministic_tournament_selection(population, evaluation_fun, n_parents))
             case 'probabilistic_tournament':

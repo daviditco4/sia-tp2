@@ -1,25 +1,24 @@
 {
-  "population_size": 500,
+  "population_size": 200,
   "termination_criteria": {
     "max_generations": 40,
     "structure": true
   },
   "parents_selection": {
-    "ratio_of_parenthood": 2.0,
-    "proportion_for_method1": 0.8,
-    "method1": "elite",
-    "method2": "roulette"
-  },
+    "ratio_of_parenthood": 1.6,
+    "proportion_for_method1": 0.5,
+    "method1": "boltzmann",
+    "method2": "probabilistic_tournament"
+  },,
   "crossover": {
     "type": "uniform"
   },
   "mutation": {
     "type": "multigen",
-    "probability": 0.1
+    "probability": 0.4
   },
   "new_generation_selection": {
-    "proportion_for_method1": 0.8,
-    "method1": "elite",
-    "method2": "roulette"
+    "proportion_for_method1": 1.0,
+    "method1": "elite"
   }
 }

@@ -1,7 +1,7 @@
 {
-  "population_size": 200,
+  "population_size": 100,
   "termination_criteria": {
-    "max_generations": 250,
+    "max_generations": 500,
     "structure": true
   },
   "parents_selection": {
@@ -14,8 +14,8 @@
     "type": "uniform"
   },
   "mutation": {
-    "type": "gen",
-    "probability": 0.01
+    "type": "multigen",
+    "probability": 0.4
   },
   "new_generation_selection": {
     "proportion_for_method1": 1.0,
