@@ -8,7 +8,7 @@ def gen_mutation(offspring, mutation_rate, total_points_available):
 
     for individual in offspring:
         if random.random() < mutation_rate:
-            index = random.randint(1, Character.attribute_amount + 2 - 1)
+            index = random.randint(1, Character.attribute_amount + 1)
             individual_list = individual.to_list()
             delta = None
 
@@ -43,12 +43,17 @@ def multigen_mutation(offspring, mutation_rate, total_points_available):
                                                                                        total_points_available):
             deltas.clear()
             attr_delta = 0
-            for i in range(1, Character.attribute_amount + 2 - 1):
+            for i in range(1, Character.attribute_amount + 1):
                 if random.random() < mutation_rate:
                     rand = random.random()
-                    deltas.append(random.choice([-1, 1]) * int(
-                        ((total_points_available / Character.attribute_amount) / 2) * (rand ** 2)))
-                    attr_delta += deltas[i - 1]
+                    choice = random.choice([-1, 1]) * int(
+                        ((total_points_available / Character.attribute_amount) / 2) * (
+                                rand ** 2))
+                    deltas.append(choice)
+                    if individual_list[i] + choice < 0:
+                        attr_delta -= individual_list[i]
+                    else:
+                        attr_delta += choice
                 else:
                     deltas.append(0)
             if random.random() < mutation_rate:
@@ -56,10 +61,10 @@ def multigen_mutation(offspring, mutation_rate, total_points_available):
                 deltas.append(random.choice([-1, 1]) * ((2.0 - 1.3) / 2) * (rand ** 2))
             else:
                 deltas.append(0)
-        for i in range(1, Character.attribute_amount + 2 - 1):
+        for i in range(1, Character.attribute_amount + 1):
             individual_list[i] = max(0, individual_list[i] + deltas[i - 1])
         individual_list[Character.attribute_amount + 1] = min(2.0, max(1.3, individual_list[
-            Character.attribute_amount + 2 - 2]))
+            Character.attribute_amount + 1] + deltas[Character.attribute_amount]))
 
         mutants.append(Character.from_list(individual_list))
 

@@ -11,3 +11,5 @@ if __name__ == '__main__':
     population = initialize_population(CharacterClass.WARRIOR, 100, 10000000)
     best_index = max(range(len(population)), key=lambda i: eve_calculate(*population[i].to_list()))
     print(str(population[best_index].to_list()) + ' IS ' + str(eve_calculate(*population[best_index].to_list())))
+
+    # print(eve_calculate(CharacterClass.WARRIOR, 50, 50, 0, 0, 0, 1.9151923473509))
