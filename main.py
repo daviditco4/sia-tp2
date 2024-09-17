@@ -76,12 +76,12 @@ if __name__ == '__main__':
     log_path = Path(args.output_file)
     info = {'CharacterClass': args.character_class, 'PointsAvailable': args.points_available,
             'ElapsedSeconds': time() - starting_time, 'PopulationSize': config['population_size'],
-            'TerminationCriteria': list(config['termination_criteria'].items())[1],
+            'MaxGenerations': config['termination_criteria']['max_generations'],
             'ParentsSelection': config['parents_selection']['method1'], 'Crossover': config['crossover']['type'],
             'Mutation': config['mutation']['type'],
             'NewGenerationSelection': config['new_generation_selection']['method1'],
             'SolutionScoreForEVE': eve_calculate(*res.to_list())}
-    print(str(res.to_list()) + ' IS ' + str(eve_calculate(*res.to_list())))
+    # print(str(res.to_list()) + ' IS ' + str(eve_calculate(*res.to_list())))
 
     with open(args.output_file, mode='a', newline='') as log_file:
         writer = DictWriter(log_file, fieldnames=list(info.keys()))

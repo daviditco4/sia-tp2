@@ -80,7 +80,7 @@ def boltzmann_selection(population, evaluation_fun, num_individuals, temperature
 
 def deterministic_tournament_selection(population, evaluation_fun, num_individuals):
     individuals = []
-    population_fit = zip(population, [evaluation_fun(*i.to_list()) for i in population])
+    population_fit = list(zip(population, [evaluation_fun(*i.to_list()) for i in population]))
 
     for _ in range(num_individuals):
         t_round = random.sample(population_fit, 2)
@@ -91,7 +91,7 @@ def deterministic_tournament_selection(population, evaluation_fun, num_individua
 
 def probabilistic_tournament_selection(population, evaluation_fun, num_individuals):
     individuals = []
-    population_fit = zip(population, [evaluation_fun(*i.to_list()) for i in population])
+    population_fit = list(zip(population, [evaluation_fun(*i.to_list()) for i in population]))
 
     for _ in range(num_individuals):
         t_round = random.sample(population_fit, 2)

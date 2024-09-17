@@ -147,10 +147,10 @@ def genetic_algorithm(character_class, points_available, config, ret):
         ret.get()
         ret.put(solution)
         if _check_termination_criteria(population, eve_calculate, termination_config):
-            print('Exiting: ' + str(i))
-            print(str(solution) + ' IS ' + str(eve_calculate(*solution.to_list())))
+            # print('Exiting: ' + str(i))
+            # print(str(solution) + ' IS ' + str(eve_calculate(*solution.to_list())))
             return
         i += 1
 
-    print(str(solution) + ' IS ' + str(eve_calculate(*solution.to_list())))
-    print([eve_calculate(*i.to_list()) for i in population])
+    # print(str(solution) + ' IS ' + str(eve_calculate(*solution.to_list())))
+    # print([eve_calculate(*i.to_list()) for i in population])

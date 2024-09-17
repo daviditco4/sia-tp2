@@ -1,7 +1,7 @@
 {
-  "population_size": 120,
+  "population_size": 500,
   "termination_criteria": {
-    "max_generations": 500,
+    "max_generations": 1000,
     "structure": true
   },
   "parents_selection": {
