@@ -9,7 +9,7 @@
     "proportion_for_method1": 0.5,
     "method1": "boltzmann",
     "method2": "probabilistic_tournament"
-  },,
+  },
   "crossover": {
     "type": "uniform"
   },
