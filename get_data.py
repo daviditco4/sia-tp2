@@ -2,7 +2,10 @@ import subprocess
 
 # Define the command template and the arguments
 command_template = 'python3'
-arguments = ['main.py -b 1.sok -a dfs', 'main.py -b 2.sok -a dfs', 'main.py -b 3.sok -a dfs', 'main.py -b 4.sok -a dfs']
+arguments = ['main.py --character-class warrior --points-available 100 --timeout 25 --config-file /configs/config_prototype.json --output-file data1.csv'
+             , 'main.py --character-class mage --points-available 100 --timeout 25 --config-file /configs/config_prototype.json --output-file data2.csv'
+             , 'main.py --character-class guardian --points-available 100 --timeout 25 --config-file /configs/config_prototype.json --output-file data3.csv'
+             , 'main.py --character-class archer --points-available 100 --timeout 25 --config-file /configs/config_prototype.json --output-file data4.csv', ]
 
 # Number of repetitions
 num_repetitions = 100
