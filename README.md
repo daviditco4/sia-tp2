@@ -1,10 +1,10 @@
-# sia-tp2
+# SIA TP2
 
 Implementation of RPG-like character generation from genetic algorithm based on Python
 
 ## System requirements
 
-Python 3.10+
+* Python 3.10+
 
 ## How to use
 
@@ -17,11 +17,11 @@ python3 main.py [--character-class <c>] [--points-available <p>] [--timeout <t>]
 
 ### Arguments
 
-* `--character-class`: The RPG-like class from which the character will be made
-* `--points-available`: The amount of points to distribute among the character's skills
-* `--timeout`: The time limit in seconds to reach the optimal character
-* `--config-file`: The config file to determine algorithm hyperparameters (as described below)
-* `--output-file`: The file to write the output to
+* `--character-class`: The RPG-like class from which the character will be made (default 'warrior')
+* `--points-available`: The amount of points to distribute among the character's skills (default 100)
+* `--timeout`: The time limit in seconds to reach the optimal character (default 30 mins)
+* `--config-file`: The config file to determine algorithm hyperparameters (as described below, default 'configs/config.json')
+* `--output-file`: The file to write the output to (default 'outputs/temp.csv')
 
 ### Hyperparameters
 
