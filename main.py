@@ -24,7 +24,7 @@ def parse_arguments():
                         help='The time limit in seconds to reach the optimal character')
     parser.add_argument('--config-file', type=str, default='configs/config.json',
                         help='The config file to determine algorithm hyperparameters')
-    parser.add_argument('--output-file', type=str, default='output/temp.out', help='The file to write the output to')
+    parser.add_argument('--output-file', type=str, default='outputs/temp.csv', help='The file to write the output to')
     parser.add_argument('--verbose', action='store_true', help='Increase output verbosity')
 
     # Parse arguments
