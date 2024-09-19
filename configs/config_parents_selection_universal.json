@@ -5,10 +5,8 @@
     "structure": true
   },
   "parents_selection": {
-    "ratio_of_parenthood": 1.6,
-    "proportion_for_method1": 0.5,
-    "method1": "boltzmann",
-    "method2": "probabilistic_tournament"
+    "ratio_of_parenthood": 2.0,
+    "method1": "universal"
   },
   "crossover": {
     "type": "uniform"

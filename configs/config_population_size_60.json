@@ -1,5 +1,5 @@
 {
-  "population_size": 200,
+  "population_size": 60,
   "termination_criteria": {
     "max_generations": 250,
     "structure": true

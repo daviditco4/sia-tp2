@@ -11,7 +11,7 @@
     "method2": "probabilistic_tournament"
   },
   "crossover": {
-    "type": "uniform"
+    "type": "circular"
   },
   "mutation": {
     "type": "multigen",

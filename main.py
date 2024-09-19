@@ -1,8 +1,12 @@
 import argparse
 import json
 import multiprocessing
+from csv import DictWriter
+from pathlib import Path
+from time import time
 
 from CharacterClass import CharacterClass
+from eve_calc import eve_calculate
 from genetic_algorithm import genetic_algorithm
 
 
@@ -20,7 +24,7 @@ def parse_arguments():
                         help='The time limit in seconds to reach the optimal character')
     parser.add_argument('--config-file', type=str, default='configs/config.json',
                         help='The config file to determine algorithm hyperparameters')
-    parser.add_argument('--output-file', type=str, help='The file to write the output to')
+    parser.add_argument('--output-file', type=str, default='outputs/temp.csv', help='The file to write the output to')
     parser.add_argument('--verbose', action='store_true', help='Increase output verbosity')
 
     # Parse arguments
@@ -51,8 +55,8 @@ def load_config(filename):
 if __name__ == '__main__':
     args = parse_arguments()
 
-    if args.verbose:
-        print('Loading config...')
+    # if args.verbose:
+    #     print('Loading config...')
     config = load_config(args.config_file)
     match args.character_class:
         case 'warrior':
@@ -66,4 +70,21 @@ if __name__ == '__main__':
         case _:
             raise ValueError('Invalid character class')
 
-    print(run_with_timeout(character_class, args.points_available, args.timeout, config).to_list())
+    starting_time = time()
+    res = run_with_timeout(character_class, args.points_available, args.timeout, config)
+
+    log_path = Path(args.output_file)
+    info = {'CharacterClass': args.character_class, 'PointsAvailable': args.points_available,
+            'ElapsedSeconds': time() - starting_time, 'PopulationSize': config['population_size'],
+            'MaxGenerations': config['termination_criteria']['max_generations'],
+            'ParentsSelection': config['parents_selection']['method1'], 'Crossover': config['crossover']['type'],
+            'Mutation': config['mutation']['type'],
+            'NewGenerationSelection': config['new_generation_selection']['method1'],
+            'SolutionScoreForEVE': eve_calculate(*res.to_list())}
+    # print(str(res.to_list()) + ' IS ' + str(eve_calculate(*res.to_list())))
+
+    with open(args.output_file, mode='a', newline='') as log_file:
+        writer = DictWriter(log_file, fieldnames=list(info.keys()))
+        if not log_path.exists() or not log_path.stat().st_size:
+            writer.writeheader()
+        writer.writerow(info)

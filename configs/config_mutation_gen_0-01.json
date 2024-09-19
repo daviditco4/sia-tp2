@@ -14,8 +14,8 @@
     "type": "uniform"
   },
   "mutation": {
-    "type": "multigen",
-    "probability": 0.4
+    "type": "gen",
+    "probability": 0.01
   },
   "new_generation_selection": {
     "proportion_for_method1": 1.0,
