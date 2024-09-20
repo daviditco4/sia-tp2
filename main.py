@@ -42,8 +42,6 @@ def run_with_timeout(char_class, points_available, timeout, conf, fit_scores):
     p.start()
     p.join(timeout)
     
-    print(aux1[0])
-    print(aux1[conf['termination_criteria']['max_generations']])
     for i in range(len(aux1)):
         fit_scores[i] = aux1[i]
 
@@ -104,8 +102,6 @@ if __name__ == '__main__':
                 best_array.append(fit_scores[i])
             elif(i >=  config['termination_criteria']['max_generations'] and i < (config['termination_criteria']['max_generations'] + index_val)):
                 avg_array.append(fit_scores[i])
-                
-    print(best_array[0], avg_array[0])
     
     log_path = Path(args.output_file)
     info = {'CharacterClass': args.character_class, 'PointsAvailable': args.points_available,
