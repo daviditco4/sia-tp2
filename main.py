@@ -1,4 +1,6 @@
 import argparse
+import ctypes
+import pickle
 import json
 import multiprocessing
 from csv import DictWriter
@@ -31,12 +33,19 @@ def parse_arguments():
     return parser.parse_args()
 
 
-def run_with_timeout(char_class, points_available, timeout, conf):
+def run_with_timeout(char_class, points_available, timeout, conf, fit_scores):
     ret = multiprocessing.Queue()
+    aux1 = multiprocessing.Array(ctypes.c_float, 2 * (conf['termination_criteria']['max_generations']))
+    
 
-    p = multiprocessing.Process(target=genetic_algorithm, args=(char_class, points_available, conf, ret))
+    p = multiprocessing.Process(target=genetic_algorithm, args=(char_class, points_available, conf, ret, aux1))
     p.start()
     p.join(timeout)
+    
+    print(aux1[0])
+    print(aux1[conf['termination_criteria']['max_generations']])
+    for i in range(len(aux1)):
+        fit_scores[i] = aux1[i]
 
     if p.is_alive():
         result = ret.get()
@@ -50,6 +59,12 @@ def run_with_timeout(char_class, points_available, timeout, conf):
 def load_config(filename):
     with open(filename, 'r') as f:
         return json.load(f)
+    
+def give_separating_index(array):
+    for i in range(len(array)):
+        if(array[i] == 0.0):
+            return i
+    return 0
 
 
 if __name__ == '__main__':
@@ -71,8 +86,27 @@ if __name__ == '__main__':
             raise ValueError('Invalid character class')
 
     starting_time = time()
-    res = run_with_timeout(character_class, args.points_available, args.timeout, config)
-
+    fit_scores = multiprocessing.Array(ctypes.c_float, 2 * (config['termination_criteria']['max_generations']))
+    res = run_with_timeout(character_class, args.points_available, args.timeout, config, fit_scores)
+    index_val = give_separating_index(fit_scores)
+    best_array=[]
+    avg_array=[]
+    
+    if index_val==0:
+        for i in range(len(fit_scores)):
+            if(i < config['termination_criteria']['max_generations']):
+                best_array.append(fit_scores[i])
+            else:
+                avg_array.append(fit_scores[i])
+    else:
+        for i in range(len(fit_scores)):
+            if(i < index_val):
+                best_array.append(fit_scores[i])
+            elif(i >=  config['termination_criteria']['max_generations'] and i < (config['termination_criteria']['max_generations'] + index_val)):
+                avg_array.append(fit_scores[i])
+                
+    print(best_array[0], avg_array[0])
+    
     log_path = Path(args.output_file)
     info = {'CharacterClass': args.character_class, 'PointsAvailable': args.points_available,
             'ElapsedSeconds': time() - starting_time, 'PopulationSize': config['population_size'],
@@ -82,6 +116,13 @@ if __name__ == '__main__':
             'NewGenerationSelection': config['new_generation_selection']['method1'],
             'SolutionScoreForEVE': eve_calculate(*res.to_list())}
     # print(str(res.to_list()) + ' IS ' + str(eve_calculate(*res.to_list())))
+
+    
+    with open(args.output_file + "_best_array.txt", mode='a') as f:
+        f.write(",".join(map(str, avg_array)) + "\n")
+
+    with open(args.output_file + "_avg_array.txt", mode='a') as f:
+        f.write(",".join(map(str, avg_array)) + "\n")
 
     with open(args.output_file, mode='a', newline='') as log_file:
         writer = DictWriter(log_file, fieldnames=list(info.keys()))

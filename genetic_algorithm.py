@@ -131,13 +131,22 @@ def initialize_population(character_class, points_available, population_size):
 
     return population
 
+def average_pop_fitness(population):
+    avg_fitness = 0.0
+    sum_fitness = 0.0
+    for character in population:
+        sum_fitness += eve_calculate(*character.to_list())
+    avg_fitness = sum_fitness/len(population)
+    return avg_fitness
 
-def genetic_algorithm(character_class, points_available, config, ret):
+
+def genetic_algorithm(character_class, points_available, config, ret, fit_scores):
     population = initialize_population(character_class, points_available, config['population_size'])
     termination_config = config['termination_criteria']
     i = 0
     ret.put(None)
     solution = None
+    max_gen = termination_config['max_generations']
 
     while not 'max_generations' in termination_config or i < termination_config['max_generations']:
         # print('GENERATION: ' + str(i))
@@ -148,11 +157,16 @@ def genetic_algorithm(character_class, points_available, config, ret):
         solution = _best_solution(population, eve_calculate)
         ret.get()
         ret.put(solution)
+        #best_fitness.append(eve_calculate(*solution.to_list()))
+        fit_scores[i] = eve_calculate(*solution.to_list())
+        #avg_fitness.append(average_pop_fitness(population))
+        fit_scores[i + max_gen] = average_pop_fitness(population)
         if _check_termination_criteria(population, eve_calculate, termination_config):
             # print('Exiting: ' + str(i))
             # print(str(solution) + ' IS ' + str(eve_calculate(*solution.to_list())))
             return
         i += 1
+    return
 
     # print(str(solution) + ' IS ' + str(eve_calculate(*solution.to_list())))
     # print([eve_calculate(*i.to_list()) for i in population])
