@@ -115,7 +115,7 @@ if __name__ == '__main__':
 
     
     with open(args.output_file + "_best_array.txt", mode='a') as f:
-        f.write(",".join(map(str, avg_array)) + "\n")
+        f.write(",".join(map(str, best_array)) + "\n")
 
     with open(args.output_file + "_avg_array.txt", mode='a') as f:
         f.write(",".join(map(str, avg_array)) + "\n")
