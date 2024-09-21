@@ -1,6 +1,6 @@
 import argparse
 import ctypes
-import pickle
+import os
 import json
 import multiprocessing
 from csv import DictWriter
@@ -116,14 +116,27 @@ if __name__ == '__main__':
     best_dict = {f"Generation{i+1}":num for i, num in enumerate(best_array)}
     avg_dict = {f"Generation{i+1}":num for i, num in enumerate(avg_array)}
     
-    with open("best_array_" + args.output_file, mode='a', newline='') as f1:
+    path_to_file = args.output_file
+    last_inx = path_to_file.rfind('/')
+    if last_inx != -1:
+        best_fit_path = path_to_file[:last_inx + 1] + "best_array_" + path_to_file[last_inx + 1:]
+        avg_fit_path = path_to_file[:last_inx + 1] + "avg_array_" + path_to_file[last_inx + 1:]
+    else:
+        best_fit_path = "best_array_" + path_to_file  # If there is no '/', just prepend the string
+        avg_fit_path = "avg_array_" + path_to_file
+
+    os.makedirs(os.path.dirname(best_fit_path), exist_ok=True)
+    os.makedirs(os.path.dirname(avg_fit_path), exist_ok=True)
+
+    
+    with open(best_fit_path, mode='a', newline='') as f1:
         writer = DictWriter(f1, fieldnames=best_dict.keys())
         # Write the header only once
         if f1.tell() == 0:  # Check if file is empty
             writer.writeheader()
         writer.writerow(best_dict)
 
-    with open("avg_array_" + args.output_file, mode='a', newline='') as f2:
+    with open(avg_fit_path, mode='a', newline='') as f2:
         writer = DictWriter(f2, fieldnames=avg_dict.keys())
         # Write the header only once
         if f2.tell() == 0:  # Check if file is empty
