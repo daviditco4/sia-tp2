@@ -113,12 +113,22 @@ if __name__ == '__main__':
             'SolutionScoreForEVE': eve_calculate(*res.to_list())}
     # print(str(res.to_list()) + ' IS ' + str(eve_calculate(*res.to_list())))
 
+    best_dict = {f"Generation{i+1}":num for i, num in enumerate(best_array)}
+    avg_dict = {f"Generation{i+1}":num for i, num in enumerate(avg_array)}
     
-    with open(args.output_file + "_best_array.txt", mode='a') as f:
-        f.write(",".join(map(str, best_array)) + "\n")
+    with open("best_array_" + args.output_file, mode='a', newline='') as f1:
+        writer = DictWriter(f1, fieldnames=best_dict.keys())
+        # Write the header only once
+        if f1.tell() == 0:  # Check if file is empty
+            writer.writeheader()
+        writer.writerow(best_dict)
 
-    with open(args.output_file + "_avg_array.txt", mode='a') as f:
-        f.write(",".join(map(str, avg_array)) + "\n")
+    with open("avg_array_" + args.output_file, mode='a', newline='') as f2:
+        writer = DictWriter(f2, fieldnames=avg_dict.keys())
+        # Write the header only once
+        if f2.tell() == 0:  # Check if file is empty
+            writer.writeheader()
+        writer.writerow(avg_dict)
 
     with open(args.output_file, mode='a', newline='') as log_file:
         writer = DictWriter(log_file, fieldnames=list(info.keys()))
