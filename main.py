@@ -35,7 +35,7 @@ def parse_arguments():
 
 def run_with_timeout(char_class, points_available, timeout, conf, fit_scores):
     ret = multiprocessing.Queue()
-    aux1 = multiprocessing.Array(ctypes.c_float, 2 * (conf['termination_criteria']['max_generations']))
+    aux1 = multiprocessing.Array(ctypes.c_float, 2 * (conf['termination_criteria']['max_generations'] + 1))
     
 
     p = multiprocessing.Process(target=genetic_algorithm, args=(char_class, points_available, conf, ret, aux1))
@@ -84,15 +84,16 @@ if __name__ == '__main__':
             raise ValueError('Invalid character class')
 
     starting_time = time()
-    fit_scores = multiprocessing.Array(ctypes.c_float, 2 * (config['termination_criteria']['max_generations']))
+    fit_scores = multiprocessing.Array(ctypes.c_float, 2 * (config['termination_criteria']['max_generations'] + 1))
     res = run_with_timeout(character_class, args.points_available, args.timeout, config, fit_scores)
     index_val = give_separating_index(fit_scores)
+    index_val = 0
     best_array=[]
     avg_array=[]
     
     if index_val==0:
-        for i in range(len(fit_scores)):
-            if(i < config['termination_criteria']['max_generations']):
+        for i in range(len(fit_scores) - 1):
+            if(i < (config['termination_criteria']['max_generations'] + 1)):
                 best_array.append(fit_scores[i])
             else:
                 avg_array.append(fit_scores[i])
@@ -113,8 +114,8 @@ if __name__ == '__main__':
             'SolutionScoreForEVE': eve_calculate(*res.to_list())}
     # print(str(res.to_list()) + ' IS ' + str(eve_calculate(*res.to_list())))
 
-    best_dict = {f"Generation{i+1}":num for i, num in enumerate(best_array)}
-    avg_dict = {f"Generation{i+1}":num for i, num in enumerate(avg_array)}
+    best_dict = {f"Generation{i}":num for i, num in enumerate(best_array)}
+    avg_dict = {f"Generation{i}":num for i, num in enumerate(avg_array)}
     
     path_to_file = args.output_file
     last_inx = path_to_file.rfind('/')

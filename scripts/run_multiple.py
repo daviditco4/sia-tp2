@@ -51,8 +51,34 @@ arguments = [
     'main.py --character-class warrior --points-available 100 --timeout 50 --output-file outputs/output_new_generation_selection.csv --config-file configs/config_new_generation_selection_probabilistic_tournament.json',
     'main.py --character-class warrior --points-available 100 --timeout 50 --output-file outputs/output_new_generation_selection.csv --config-file configs/config_new_generation_selection_ranking.json']
 
+last_args = ['main.py --character-class warrior --points-available 100 --timeout 50 --config-file configs/config_prototype.json --output-file outputs/clases.csv',
+    'main.py --character-class archer --points-available 100 --timeout 50 --config-file configs/config_prototype.json --output-file outputs/clases.csv',
+    'main.py --character-class guardian --points-available 100 --timeout 50 --config-file configs/config_prototype.json --output-file outputs/clases.csv',
+    'main.py --character-class mage --points-available 100 --timeout 50 --config-file configs/config_prototype.json --output-file outputs/clases.csv',
+]
+
+nuevos_args = ['main.py --character-class warrior --points-available 100 --timeout 50 --output-file outputs/output_parents_selection.csv --config-file configs/config_parents_selection_elite.json',
+    'main.py --character-class warrior --points-available 100 --timeout 50 --output-file outputs/output_parents_selection.csv --config-file configs/config_parents_selection_roulette.json',
+    'main.py --character-class warrior --points-available 100 --timeout 50 --output-file outputs/output_parents_selection.csv --config-file configs/config_parents_selection_universal.json',
+    'main.py --character-class warrior --points-available 100 --timeout 50 --output-file outputs/output_parents_selection.csv --config-file configs/config_parents_selection_boltzmann.json',
+    'main.py --character-class warrior --points-available 100 --timeout 50 --output-file outputs/output_parents_selection.csv --config-file configs/config_parents_selection_deterministic_tournament.json',
+    'main.py --character-class warrior --points-available 100 --timeout 50 --output-file outputs/output_parents_selection.csv --config-file configs/config_parents_selection_probabilistic_tournament.json',
+    'main.py --character-class warrior --points-available 100 --timeout 50 --output-file outputs/output_parents_selection.csv --config-file configs/config_parents_selection_ranking.json',
+
+    'main.py --character-class warrior --points-available 100 --timeout 50 --output-file outputs/output_crossover.csv --config-file configs/config_crossover_one_point.json',
+    'main.py --character-class warrior --points-available 100 --timeout 50 --output-file outputs/output_crossover.csv --config-file configs/config_crossover_two_point.json',
+    'main.py --character-class warrior --points-available 100 --timeout 50 --output-file outputs/output_crossover.csv --config-file configs/config_crossover_uniform.json',
+    'main.py --character-class warrior --points-available 100 --timeout 50 --output-file outputs/output_crossover.csv --config-file configs/config_crossover_circular.json',
+
+    'main.py --character-class warrior --points-available 100 --timeout 50 --output-file outputs/output_mutation.csv --config-file configs/config_mutation_gen_0-01.json',
+    'main.py --character-class warrior --points-available 100 --timeout 50 --output-file outputs/output_mutation.csv --config-file configs/config_mutation_gen_0-1.json',
+    'main.py --character-class warrior --points-available 100 --timeout 50 --output-file outputs/output_mutation.csv --config-file configs/config_mutation_gen_0-4.json',
+    'main.py --character-class warrior --points-available 100 --timeout 50 --output-file outputs/output_mutation.csv --config-file configs/config_mutation_multigen_0-01.json',
+    'main.py --character-class warrior --points-available 100 --timeout 50 --output-file outputs/output_mutation.csv --config-file configs/config_mutation_multigen_0-1.json',
+    'main.py --character-class warrior --points-available 100 --timeout 50 --output-file outputs/output_mutation.csv --config-file configs/config_mutation_multigen_0-4.json']
+
 # Number of repetitions
-num_repetitions = 10
+num_repetitions = 25
 
 
 def run_command(command, args, repetitions):
@@ -74,4 +100,4 @@ def run_command(command, args, repetitions):
 
 
 if __name__ == "__main__":
-    run_command(command_template, arguments, num_repetitions)
+    run_command(command_template, nuevos_args, num_repetitions)

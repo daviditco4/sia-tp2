@@ -147,6 +147,11 @@ def genetic_algorithm(character_class, points_available, config, ret, fit_scores
     ret.put(None)
     solution = None
     max_gen = termination_config['max_generations']
+    j = 0
+    first_sol = _best_solution(population, eve_calculate)
+    fit_scores[j] = eve_calculate(*first_sol.to_list())
+    fit_scores[j + max_gen] = average_pop_fitness(population)
+    j += 1
 
     while not 'max_generations' in termination_config or i < termination_config['max_generations']:
         # print('GENERATION: ' + str(i))
@@ -158,14 +163,15 @@ def genetic_algorithm(character_class, points_available, config, ret, fit_scores
         ret.get()
         ret.put(solution)
         #best_fitness.append(eve_calculate(*solution.to_list()))
-        fit_scores[i] = eve_calculate(*solution.to_list())
+        fit_scores[j] = eve_calculate(*solution.to_list())
         #avg_fitness.append(average_pop_fitness(population))
-        fit_scores[i + max_gen] = average_pop_fitness(population)
+        fit_scores[j + max_gen] = average_pop_fitness(population)
         if _check_termination_criteria(population, eve_calculate, termination_config):
             # print('Exiting: ' + str(i))
             # print(str(solution) + ' IS ' + str(eve_calculate(*solution.to_list())))
             return
         i += 1
+        j += 1
     return
 
     # print(str(solution) + ' IS ' + str(eve_calculate(*solution.to_list())))

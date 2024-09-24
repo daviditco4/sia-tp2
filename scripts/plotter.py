@@ -61,19 +61,19 @@ if __name__ == "__main__":
     plt.savefig("elapsed_seconds_by_population_size_barplot.png", dpi=300, bbox_inches='tight')
     plt.close()
 
-    plt.figure()
+   # plt.figure()
     # Use seaborn's lineplot with standard deviation bands
-    elapsed_seconds_plot = sns.barplot(
-        data=dataframes['output_max_generations'],
-        x='MaxGenerations',
-        y='ElapsedSeconds',
-        hue='CharacterClass',  # Color by algorithm
-        errorbar=('sd', 2)
-    )
+    #elapsed_seconds_plot = sns.barplot(
+     #   data=dataframes['output_max_generations'],
+      #  x='MaxGenerations',
+       # y='ElapsedSeconds',
+        #hue='CharacterClass',  # Color by algorithm
+        #errorbar=('sd', 2)
+  #  )
     # Ensure x-axis labels are integers
-    elapsed_seconds_plot.xaxis.set_major_locator(ticker.MaxNLocator(integer=True))
-    plt.savefig("elapsed_seconds_by_max_generations_barplot.png", dpi=300, bbox_inches='tight')
-    plt.close()
+  #  elapsed_seconds_plot.xaxis.set_major_locator(ticker.MaxNLocator(integer=True))
+  #  plt.savefig("elapsed_seconds_by_max_generations_barplot.png", dpi=300, bbox_inches='tight')
+  #  plt.close()
 
     plt.figure()
     # Use seaborn's lineplot with standard deviation bands
@@ -82,7 +82,8 @@ if __name__ == "__main__":
         x='ParentsSelection',
         y='ElapsedSeconds',
         hue='CharacterClass',  # Color by algorithm
-        errorbar=('sd', 2)
+        errorbar=('sd', 2),
+        width=0.4
     )
     # Ensure x-axis labels are integers
     elapsed_seconds_plot.xaxis.set_major_locator(ticker.MaxNLocator(integer=True))
@@ -124,11 +125,13 @@ if __name__ == "__main__":
         x='NewGenerationSelection',
         y='ElapsedSeconds',
         hue='CharacterClass',  # Color by algorithm
-        errorbar=('sd', 2)
+        errorbar=('sd', 2),
+        width=0.4
     )
     # Ensure x-axis labels are integers
     elapsed_seconds_plot.xaxis.set_major_locator(ticker.MaxNLocator(integer=True))
     plt.savefig("elapsed_seconds_by_new_generation_selection_barplot.png", dpi=300, bbox_inches='tight')
+    plt.show()
     plt.close()
 
     plt.figure()
@@ -173,19 +176,19 @@ if __name__ == "__main__":
     plt.savefig("solution_score_for_eve_by_population_size_barplot.png", dpi=300, bbox_inches='tight')
     plt.close()
 
-    plt.figure()
+#    plt.figure()
     # Use seaborn's lineplot with standard deviation bands
-    elapsed_seconds_plot = sns.barplot(
-        data=dataframes['output_max_generations'],
-        x='MaxGenerations',
-        y='SolutionScoreForEVE',
-        hue='CharacterClass',  # Color by algorithm
-        errorbar=('sd', 2)
-    )
+#    elapsed_seconds_plot = sns.barplot(
+#        data=dataframes['output_max_generations'],
+#        x='MaxGenerations',
+#        y='SolutionScoreForEVE',
+#        hue='CharacterClass',  # Color by algorithm
+#        errorbar=('sd', 2)
+#    )
     # Ensure x-axis labels are integers
-    elapsed_seconds_plot.xaxis.set_major_locator(ticker.MaxNLocator(integer=True))
-    plt.savefig("solution_score_for_eve_by_max_generations_barplot.png", dpi=300, bbox_inches='tight')
-    plt.close()
+#    elapsed_seconds_plot.xaxis.set_major_locator(ticker.MaxNLocator(integer=True))
+#    plt.savefig("solution_score_for_eve_by_max_generations_barplot.png", dpi=300, bbox_inches='tight')
+#    plt.close()
 
     plt.figure()
     # Use seaborn's lineplot with standard deviation bands
@@ -194,11 +197,13 @@ if __name__ == "__main__":
         x='ParentsSelection',
         y='SolutionScoreForEVE',
         hue='CharacterClass',  # Color by algorithm
-        errorbar=('sd', 2)
+        errorbar=('sd', 2),
+        width=0.4
     )
     # Ensure x-axis labels are integers
     elapsed_seconds_plot.xaxis.set_major_locator(ticker.MaxNLocator(integer=True))
     plt.savefig("solution_score_for_eve_by_parents_selection_barplot.png", dpi=300, bbox_inches='tight')
+    plt.show()
     plt.close()
 
     plt.figure()
@@ -236,9 +241,11 @@ if __name__ == "__main__":
         x='NewGenerationSelection',
         y='SolutionScoreForEVE',
         hue='CharacterClass',  # Color by algorithm
-        errorbar=('sd', 2)
+        errorbar=('sd', 2),
+        width=0.4
     )
     # Ensure x-axis labels are integers
     elapsed_seconds_plot.xaxis.set_major_locator(ticker.MaxNLocator(integer=True))
     plt.savefig("solution_score_for_eve_by_new_generation_selection_barplot.png", dpi=300, bbox_inches='tight')
+    plt.show()
     plt.close()
